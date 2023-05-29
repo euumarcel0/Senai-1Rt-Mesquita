@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Água e Fogo</title>
+    <style>
+        #game-container {
+            width: 600px;
+            height: 400px;
+            border: 1px solid black;
+            position: relative;
+        }
+
+        .player {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+
+        #water {
+            background-color: blue;
+        }
+
+        #fire {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <h1>Água e Fogo</h1>
+    <div id="game-container">
+        <div id="water" class="player"></div>
+        <div id="fire" class="player"></div>
+    </div>
+
+    <script>
+        // Obtém as referências para os elementos do jogo
+        const water = document.getElementById('water');
+        const fire = document.getElementById('fire');
+
+        // Posiciona a água no início do jogo
+        let waterLeft = 0;
+        let waterTop = 0;
+        water.style.left = waterLeft + 'px';
+        water.style.top = waterTop + 'px';
+
+        // Posiciona o fogo no início do jogo
+        let fireLeft = 550;
+        let fireTop = 350;
+        fire.style.left = fireLeft + 'px';
+        fire.style.top = fireTop + 'px';
+
+        // Função para mover a água
+        function moveWater(direction) {
+            switch (direction) {
+                case 'up':
+                    waterTop -= 50;
+                    break;
+                case 'down':
+                    waterTop += 50;
+                    break;
+                case 'left':
+                    waterLeft -= 50;
+                    break;
+                case 'right':
+                    waterLeft += 50;
+                    break;
+            }
+            water.style.left = waterLeft + 'px';
+            water.style.top = waterTop + 'px';
+            checkCollision();
+        }
+
+        // Função para mover o fogo
+        function moveFire(direction) {
+            switch (direction) {
+                case 'up':
+                    fireTop -= 50;
+                    break;
+                case 'down':
+                    fireTop += 50;
+                    break;
+                case 'left':
+                    fireLeft -= 50;
+                    break;
+                case 'right':
+                    fireLeft += 50;
+                    break;
+            }
+            fire.style.left = fireLeft + 'px';
+            fire.style.top = fireTop + 'px';
+            checkCollision();
+        }
+
+        // Função para verificar colisões entre a água e o fogo
+        function checkCollision() {
+            if (waterLeft === fireLeft && waterTop === fireTop) {
+                alert('Você perdeu!');
+            }
+        }
+
+        // Event listener para as teclas pressionadas
+        document.addEventListener('keydown', function (event) {
+            const key = event.key;
+            if (key === 'ArrowUp') {
+                moveWater('up');
+            } else if (key === 'ArrowDown') {
+                moveWater('down');
+            } else if (key === 'ArrowLeft') {
+                moveWater('left');
+            } else if (key === 'ArrowRight') {
+                moveWater('right');
+            } else if (key === 'w') {
+                moveFire('up');
+            } else if (key === 's') {
+                moveFire('down');
+            } else if (key === 'a') {
+                moveFire('left');
+            } else if (key === 'd') {
+                moveFire('right');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+salario=float(input("Insira seu salário: "))
+porc=int(input("Qual a porcentagem do aumento (não incluir sinal de porcentagem): "))
+aumento=salario+(salario*(porc/100))
+print("Seu salário é de R${}".format(salario))
+print("Com {}% de aumento, seu salário é de: R${}".format(porc,round(aumento, 2)))

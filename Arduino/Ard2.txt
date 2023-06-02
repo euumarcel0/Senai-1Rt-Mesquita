@@ -1,0 +1,17 @@
+const int pinPOT = A5;
+const int pinLED = 2;
+
+float luzLED = 0;
+
+void setup()
+{
+pinMode(pinLED, OUTPUT);
+pinMode(pinPOT, INPUT);
+}
+
+void loop()
+{
+luzLED = map(analogRead(pinPOT), 0, 1023, 0, 255);
+analogWrite (pinLED, luzLED);
+}
+}

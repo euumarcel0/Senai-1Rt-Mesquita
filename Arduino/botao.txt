@@ -1,0 +1,25 @@
+// Declaração dos pinos
+const int buttonPin = 2;    // Pino do botão
+const int buzzerPin = 4;    // Pino do buzzer
+
+// Variável para armazenar o estado do botão
+int buttonState = 0;
+
+void setup() {
+  pinMode(buttonPin, INPUT);     // Define o pino do botão como entrada
+  pinMode(buzzerPin, OUTPUT);    // Define o pino do buzzer como saída
+}
+
+void loop() {
+  // Lê o estado do botão
+  buttonState = digitalRead(buttonPin);
+
+  // Verifica se o botão foi pressionado
+  if (buttonState == HIGH) {
+    // Emite o som no buzzer
+    tone(buzzerPin, 10);       // Frequência do som: 1000Hz
+  } else {
+    // Para o som no buzzer
+    noTone(buzzerPin);
+  }
+}

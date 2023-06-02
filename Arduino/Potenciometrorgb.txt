@@ -1,0 +1,51 @@
+int pinoR = 11; // PINO DIGITAL EM QUE O TERMINAL 'R' ESTÁ CONECTADO
+int pinoG = 10; // PINO DIGITAL EM QUE O TERMINAL 'G' ESTÁ CONECTADO
+int pinoB = 9;  // PINO DIGITAL EM QUE O TERMINAL 'B' ESTÁ CONECTADO
+const int pinoPOT = A5; // PINO ANALÓGICO UTILIZADO PELO POTENCIÔMETRO
+
+int valorPotAnterior = 0; // VARIÁVEL QUE ARMAZENA O VALOR ANTERIOR DO POTENCIÔMETRO
+
+void setup() {
+  pinMode(pinoPOT, INPUT); // DEFINE O PINO COMO ENTRADA
+  pinMode(pinoR, OUTPUT);  // DEFINE O PINO COMO SAÍDA
+  pinMode(pinoG, OUTPUT);  // DEFINE O PINO COMO SAÍDA
+  pinMode(pinoB, OUTPUT);  // DEFINE O PINO COMO SAÍDA
+}
+
+void loop() {
+  int valorPot = analogRead(pinoPOT); // LÊ O VALOR DO POTENCIÔMETRO
+  
+  if (valorPot == 0) {
+    // Potenciômetro desligado, apaga a luz RGB
+    turnOffRGB();
+  } else {
+    // Verifica se houve uma mudança significativa no valor do potenciômetro
+    if (abs(valorPot - valorPotAnterior) > 10) {
+      setColor(valorPot); // Define a cor do LED RGB com base no valor do potenciômetro
+      valorPotAnterior = valorPot; // Atualiza o valor anterior do potenciômetro
+    }
+  }
+}
+
+// FUNÇÃO QUE PRODUZ A COR DO LED RGB COM BASE NO VALOR DO POTENCIÔMETRO
+void setColor(int valorPot) {
+  int vermelho = map(valorPot, 0, 600, 0, 255); // Mapeia o valor do potenciômetro para o brilho do vermelho
+  int verde = 0;   // Define o brilho do verde como 0
+  int azul = map(valorPot, 0, 601, 255, 0);    // Mapeia o valor do potenciômetro para o brilho do azul
+
+  if (valorPot < 512) {
+    verde = map(valorPot, 0, 299, 0, 255); // Mapeia o valor do potenciômetro para o brilho do verde
+  } else {
+    verde = map(valorPot, 300, 1023, 255, 0); // Mapeia o valor do potenciômetro para o brilho do verde
+  }
+
+  analogWrite(pinoR, vermelho); // DEFINE O BRILHO DO TERMINAL 'R' DO LED RGB
+  analogWrite(pinoG, verde);    // DEFINE O BRILHO DO TERMINAL 'G' DO LED RGB
+  analogWrite(pinoB, azul);     // DEFINE O BRILHO DO TERMINAL 'B' DO LED RGB
+}
+
+void turnOffRGB() {
+  analogWrite(pinoR, 0); // Define o brilho do terminal 'R' como 0   
+  analogWrite(pinoG, 0); // Define o brilho do terminal 'G' como 0
+  analogWrite(pinoB, 0); // Define o brilho do terminal 'B' como 0
+}

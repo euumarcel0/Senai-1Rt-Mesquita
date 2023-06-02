@@ -1,0 +1,47 @@
+// Define os pinos dos LEDs
+const int led1Pin = 3;
+const int led2Pin = 5;
+const int led3Pin = 6;
+
+// Define o pino do potenciômetro
+const int potPin = A5;
+
+// Variável para armazenar o valor lido do potenciômetro
+int potValue = 0;
+
+void setup() {
+  pinMode(led1Pin, OUTPUT);
+  pinMode(led2Pin, OUTPUT);
+  pinMode(led3Pin, OUTPUT);
+}
+
+void loop() {
+  // Lê o valor do potenciômetro
+  potValue = analogRead(potPin);
+
+  // Verifica se o valor do potenciômetro é zero e desliga todos os LEDs
+  if (potValue == 0) {
+    digitalWrite(led1Pin, LOW);
+    digitalWrite(led2Pin, LOW);
+    digitalWrite(led3Pin, LOW);
+  }
+  else {
+    // Calcula em qual LED ligar com base no valor lido do potenciômetro
+    if (potValue < 300) {
+      // Ligar o LED 1 e desligar os outros
+      digitalWrite(led1Pin, HIGH);
+      digitalWrite(led2Pin, LOW);
+      digitalWrite(led3Pin, LOW);
+    } else if (potValue < 600) {
+      // Ligar o LED 2 e desligar os outros
+      digitalWrite(led1Pin, LOW);
+      digitalWrite(led2Pin, HIGH);
+      digitalWrite(led3Pin, LOW);
+    } else {
+      // Ligar o LED 3 e desligar os outros
+      digitalWrite(led1Pin, LOW);
+      digitalWrite(led2Pin, LOW);
+      digitalWrite(led3Pin, HIGH);
+    }
+  }
+}
